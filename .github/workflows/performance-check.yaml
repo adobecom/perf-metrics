@@ -34,7 +34,7 @@ jobs:
       - name: Checkout workflow repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.action_repository || 'your-org/perf-metrics' }}
+          repository: ${{ github.action_repository || 'adobecom/perf-metrics' }}
           path: perf-metrics
 
       - name: Checkout caller repo
