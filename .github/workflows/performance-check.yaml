@@ -12,9 +12,6 @@ on:
       baseline_path:
         required: false
         type: string
-    secrets:
-      token:
-        required: false
 
 concurrency:
   group: perf-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
