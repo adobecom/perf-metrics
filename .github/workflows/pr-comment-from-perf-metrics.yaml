@@ -1,0 +1,27 @@
+# Reusable workflow: when called from another repo on pull_request,
+# it runs in that repo's context and posts a comment that the run is from perf-metrics.
+name: PR Comment from perf-metrics
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  comment-on-pr:
+    name: Comment on PR
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Add comment to PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: 'It is running from perf-metrics repo',
+            });
