@@ -1,0 +1,27 @@
+# =============================================================================
+# Example workflow for a CONSUMING repo (copy this into your repo, not perf-metrics)
+# =============================================================================
+# Copy this file to your repo as .github/workflows/perf-metrics.yml
+# Replace YOUR_ORG with the GitHub org/user that owns the perf-metrics repo.
+# =============================================================================
+
+name: perf-metrics
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  # Comment on PR that the run is from perf-metrics (only when PR is opened)
+  pr-comment:
+    if: github.event.action == 'opened'
+    uses: YOUR_ORG/perf-metrics/.github/workflows/pr-comment-from-perf-metrics.yaml@main
+
+  # Run the full performance check (LCP, CLS, TBT, etc.) and comment results
+  performance-check:
+    uses: YOUR_ORG/perf-metrics/.github/workflows/performance-check.yaml@main
+    # Optional: pass inputs to override defaults
+    # with:
+    #   test_url: ''           # leave empty to use PR preview URL
+    #   throttle: ''           # e.g. 'Slow 4G' or leave empty
+    #   baseline_path: 'caller/.github/performance/baseline.json'

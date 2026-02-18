@@ -3,6 +3,16 @@ name: Performance Check (reusable)
 on:
   workflow_call:
     inputs:
+      workflow_repo:
+        description: 'Owner/repo of the perf-metrics workflow (for checkout).'
+        required: false
+        type: string
+        default: adobecom/perf-metrics
+      workflow_ref:
+        description: 'Ref (branch/tag) of perf-metrics to checkout.'
+        required: false
+        type: string
+        default: main
       test_url:
         required: false
         type: string
@@ -31,7 +41,8 @@ jobs:
       - name: Checkout workflow repo
         uses: actions/checkout@v4
         with:
-          repository: ${{ github.action_repository || 'adobecom/perf-metrics' }}
+          repository: ${{ inputs.workflow_repo }}
+          ref: ${{ inputs.workflow_ref }}
           path: perf-metrics
 
       - name: Checkout caller repo
